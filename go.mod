@@ -1,4 +1,4 @@
-module github.com/kz/discordrus
+module github.com/ferleal/discordrus
 
 go 1.15
 

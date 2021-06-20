@@ -2,6 +2,7 @@ package discordrus
 
 import (
 	"bytes"
+	"fmt"
 	"net/http"
 	"os"
 	"strings"
@@ -15,15 +16,25 @@ func init() {
 	logrus.SetFormatter(&logrus.TextFormatter{})
 	logrus.SetOutput(os.Stderr)
 	logrus.SetLevel(logrus.TraceLevel)
-
+	cmdName := "Discord Title Test"
+	discordTitles :=  map[string]string{
+		"trace": fmt.Sprintf("%s %s", "TRACE", cmdName),
+		"debug":  fmt.Sprintf("%s %s", "DEBUG", cmdName),
+		"info":  fmt.Sprintf("%s %s", "INFORMATION", cmdName),
+		"warn":  fmt.Sprintf("%s %s", "WARNING", cmdName),
+		"error": fmt.Sprintf("%s %s", "ERROR", cmdName),
+		"panic": fmt.Sprintf("%s %s", "PANIC", cmdName),
+		"fatal": fmt.Sprintf("%s %s", "FATAL", cmdName),
+	}
 	logrus.AddHook(NewHook(
 		// Use environment variable for security reasons
 		os.Getenv("DISCORDRUS_WEBHOOK_URL"),
 		// Set minimum level to DebugLevel to receive all log entries
 		logrus.TraceLevel,
 		&Opts{
-			Username:           "Test Username",
-			Author:             "",                         // Setting this to a non-empty string adds the author text to the message header
+			Username: "Test Username",
+			Author:   "", // Setting this to a non-empty string adds the author text to the message header
+			DiscordTitles: discordTitles,
 			DisableTimestamp:   false,                      // Setting this to true will disable timestamps from appearing in the footer
 			TimestampFormat:    "Jan 2 15:04:05.00000 MST", // The timestamp takes this format; if it is unset, it will take logrus' default format
 			TimestampLocale:    nil,                        // The timestamp uses this locale; if it is unset, it will use time.Local
@@ -142,9 +153,10 @@ func TestMaxLengths(t *testing.T) {
 
 // TestHookIntegration is an integration test to ensure that log entries do send
 func TestHookIntegration(t *testing.T) {
-	logrus.WithFields(logrus.Fields{"String": "hi", "Integer": 2, "Boolean": false}).Trace("Check this out! Awesome, right?")
-	logrus.WithFields(logrus.Fields{"String": "hi", "Integer": 2, "Boolean": false}).Debug("Check this out! Awesome, right?")
-	logrus.WithFields(logrus.Fields{"String": "hi", "Integer": 2, "Boolean": false}).Info("Check this out! Awesome, right?")
-	logrus.WithFields(logrus.Fields{"String": "hi", "Integer": 2, "Boolean": false}).Warn("Check this out! Awesome, right?")
-	logrus.WithFields(logrus.Fields{"String": "hi", "Integer": 2, "Boolean": false}).Error("Check this out! Awesome, right?")
+	//logrus.WithFields(logrus.Fields{"String": "hi", "Integer": 2, "Boolean": false}).Trace("Check this out! Awesome, right?")
+	//logrus.WithFields(logrus.Fields{"String": "hi", "Integer": 2, "Boolean": false}).Debug("Check this out! Awesome, right?")
+	//logrus.WithFields(logrus.Fields{"String": "hi", "Integer": 2, "Boolean": false}).Info("Check this out! Awesome, right?")
+	//logrus.WithFields(logrus.Fields{"String": "hi", "Integer": 2, "Boolean": false}).Warn("Check this out! Awesome, right?")
+	//logrus.WithFields(logrus.Fields{"String": "hi", "Integer": 2, "Boolean": false}).Error("Check this out! Awesome, right?")
+
 }

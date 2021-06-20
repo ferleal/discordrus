@@ -40,6 +40,8 @@ type Opts struct {
 	TimestampFormat string
 	// TimestampLocale specifies a custom locale for the timestamp
 	TimestampLocale *time.Location
+	// DiscordTitles []string
+	DiscordTitles map[string]string
 }
 
 // Hook is a hook to send logs to Discord
@@ -100,8 +102,12 @@ func (hook *Hook) parseToJson(entry *logrus.Entry) (*[]byte, error) {
 	var data = map[string]interface{}{
 		"embeds": []map[string]interface{}{},
 	}
+	title:= strings.ToUpper(entry.Level.String())
+	if discTitle, exists := hook.Opts.DiscordTitles[entry.Level.String()]; exists {
+		title = discTitle
+	}
 	var embed = map[string]interface{}{
-		"title": strings.ToUpper(entry.Level.String()),
+		"title": title,
 	}
 	var fields = []map[string]interface{}{}
 
