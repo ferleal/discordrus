@@ -150,6 +150,15 @@ func (hook *Hook) parseToJson(entry *logrus.Entry) (*[]byte, error) {
 		}
 	}
 
+	// Collect the keys into a slice.
+	keys := make([]string, 0, len(entry.Data))
+	for key := range entry.Data {
+		keys = append(keys, key)
+	}
+
+	// Sort the keys.
+	sort.Strings(keys)
+
 	// Add fields to embed
 	counter := 0
 	for name, value := range entry.Data {
