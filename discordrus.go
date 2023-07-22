@@ -166,7 +166,8 @@ func (hook *Hook) parseToJson(entry *logrus.Entry) (*[]byte, error) {
 		if counter > maxFieldNum {
 			break
 		}
-
+		
+		value := entry.Data[name]
 		// Make value a string
 		valueStr := fmt.Sprintf("%v", value)
 
