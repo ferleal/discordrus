@@ -161,7 +161,7 @@ func (hook *Hook) parseToJson(entry *logrus.Entry) (*[]byte, error) {
 
 	// Add fields to embed
 	counter := 0
-	for name, value := range keys {
+	for _, name := range keys {
 		// Ensure that the maximum field number is not exceeded
 		if counter > maxFieldNum {
 			break
